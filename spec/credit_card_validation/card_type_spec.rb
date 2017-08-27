@@ -5,7 +5,7 @@ module CreditCardValidation
     describe '.validate' do
       subject { CardType.validate(card_number) }
 
-      let(:card_number) { '4408 0412 3456 7893' }
+      let(:card_number) { '4408041234567893' }
       let(:card_type) { 'Visa' }
 
       it 'validates the card type' do

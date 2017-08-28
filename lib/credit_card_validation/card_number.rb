@@ -22,12 +22,13 @@ module CreditCardValidation
     private
 
     def sum_digits
-      odd_digits.inject(:+) + even_digits.inject(:+)
+      twice_odd_digits.inject(:+) + even_digits.inject(:+)
     end
 
-    def odd_digits
+    def twice_odd_digits
       raw_digits.select.with_index { |_,i| i.odd? }.
-        map { |x| x*2 }.map(&:to_s).
+        map { |n| n*2 }.
+        map(&:to_s).
         flat_map { |s| s.split('') }.
         map(&:to_i)
     end

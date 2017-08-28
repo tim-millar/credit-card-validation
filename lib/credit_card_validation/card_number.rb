@@ -26,11 +26,14 @@ module CreditCardValidation
     end
 
     def twice_odd_digits
-      raw_digits.select.with_index { |_,i| i.odd? }.
-        map { |n| n*2 }.
+      unflattened_twice_odd_digits.
         map(&:to_s).
-        flat_map { |s| s.split('') }.
+        flat_map(&:chars).
         map(&:to_i)
+    end
+
+    def unflattened_twice_odd_digits
+      raw_digits.select.with_index { |_,i| i.odd? }.map { |n| n*2 }
     end
 
     def even_digits
@@ -38,7 +41,7 @@ module CreditCardValidation
     end
 
     def raw_digits
-      card_number.split('').reverse.map(&:to_i)
+      card_number.chars.reverse.map(&:to_i)
     end
   end
 end

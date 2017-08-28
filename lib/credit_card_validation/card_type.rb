@@ -28,19 +28,46 @@ module CreditCardValidation
     private
 
     def amex?
-      (card_number.start_with?('34') || card_number.start_with?('36')) && card_number.length == 15
+      card_starts_with?(prefixes[:amex]) && is_fifteen_digits?
     end
 
     def discover?
-      card_number.start_with?('6011') && card_number.length == 16
+      card_starts_with?(prefixes[:discover]) && is_sixteen_digits?
     end
 
     def master_card?
-      ('51'..'55').inject(false) { |acc, x| card_number.start_with?(x) } && card_number.length == 16
+      card_starts_with?(prefixes[:master_card]) && is_sixteen_digits?
     end
 
     def visa?
-      card_number.start_with?('4') && (card_number.length == 13 || card_number.length == 16)
+      card_starts_with?(prefixes[:visa]) && (is_thirteen_digits? || is_sixteen_digits?)
+    end
+
+    def card_starts_with?(prefixes)
+      prefixes.inject(false) do |acc, prefix|
+        card_number.start_with?(prefix) || acc
+      end
+    end
+
+    def prefixes
+      {
+        amex: ['34', '36'],
+        discover: ['6011'],
+        master_card: [*'51'..'55'],
+        visa: ['4'],
+      }
+    end
+
+    def is_sixteen_digits?
+      card_number.length == 16
+    end
+
+    def is_thirteen_digits?
+      card_number.length == 13
+    end
+
+    def is_fifteen_digits?
+      card_number.length == 15
     end
   end
 end

@@ -13,17 +13,21 @@ module CreditCardValidation
 
     def run
       "Card type is: #{card_type_validation}.\n"\
-      "Card number is: #{card_number_validation}."
+      "Card number is: #{card_number_validation}.\n"
     end
 
     private
 
     def card_type_validation
-      CardType.validate(card_number)
+      CardType.validate(parsed_card_number)
     end
 
     def card_number_validation
-      CardNumber.validate(card_number)
+      CardNumber.validate(parsed_card_number)
+    end
+
+    def parsed_card_number
+      card_number.gsub(/[^0-9]/, '')
     end
   end
 end

@@ -12,7 +12,7 @@ module CreditCardValidation
       end
 
       context 'when the card number is invalid' do
-        let(:card_number) { '123456789' }
+        let(:card_number) { '4417123456789112' }
 
         it 'rejects the card' do
           expect(subject).to eql('Invalid')

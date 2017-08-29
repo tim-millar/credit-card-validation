@@ -1,14 +1,15 @@
 module CreditCardValidation
   class CardNumber
-    attr_reader :card_number
-    private :card_number
+    extend Forwardable
 
-    def initialize(card_number)
-      @card_number = card_number
+    def_delegators :@credit_card, :odd_digits, :even_digits
+
+    def initialize(credit_card)
+      @credit_card = credit_card
     end
 
-    def self.validate(card_number)
-      new(card_number).validate
+    def self.validate(credit_card)
+      new(credit_card).validate
     end
 
     def validate
@@ -33,15 +34,7 @@ module CreditCardValidation
     end
 
     def unflattened_twice_odd_digits
-      raw_digits.select.with_index { |_,i| i.odd? }.map { |n| n*2 }
-    end
-
-    def even_digits
-      raw_digits.select.with_index { |_,i| i.even? }
-    end
-
-    def raw_digits
-      card_number.chars.reverse.map(&:to_i)
+      odd_digits.map { |n| n*2 }
     end
   end
 end

@@ -19,11 +19,15 @@ module CreditCardValidation
     private
 
     def card_type_validation
-      CardType.validate(parsed_card_number)
+      CardType.validate(credit_card)
     end
 
     def card_number_validation
-      CardNumber.validate(parsed_card_number)
+      CardNumber.validate(credit_card)
+    end
+
+    def credit_card
+      CreditCard.new(parsed_card_number)
     end
 
     def parsed_card_number

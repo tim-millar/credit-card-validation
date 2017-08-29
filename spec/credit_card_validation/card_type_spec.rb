@@ -3,9 +3,20 @@ require 'spec_helper'
 module CreditCardValidation
   RSpec.describe CardType do
     describe '.validate' do
-      subject { CardType.validate(card_number) }
+      subject { CardType.validate(credit_card) }
+
+      let(:credit_card) { double('CreditCard') }
+      let(:prefixes) { ['4'] }
+      let(:number_length) { card_number.length }
 
       let(:card_number) { '4408041234567893' }
+
+      before do
+        allow(credit_card).to receive(:number_starts_with?).with(prefixes).
+          and_return(true)
+        allow(credit_card).to receive(:number_is_length?).with(number_length).
+          and_return(true)
+      end
 
       it { is_expected.to eql('Visa') }
 

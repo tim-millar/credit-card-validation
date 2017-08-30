@@ -33,14 +33,14 @@ module CreditCardValidation
     end
 
     def unflattened_twice_odd_digits
-      raw_digits.select.with_index { |_,i| i.odd? }.map { |n| n*2 }
+      all_digits.select.with_index { |_,i| i.odd? }.map { |n| n*2 }
     end
 
     def even_digits
-      raw_digits.select.with_index { |_,i| i.even? }
+      all_digits.select.with_index { |_,i| i.even? }
     end
 
-    def raw_digits
+    def all_digits
       card_number.chars.reverse.map(&:to_i)
     end
   end
